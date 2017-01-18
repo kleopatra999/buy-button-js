@@ -75,6 +75,7 @@ export default class Product extends Component {
     this.selectedQuantity = 1;
     this.updater = new ProductUpdater(this);
     this.view = new ProductView(this);
+    this.selectedImage = null;
   }
 
   /**
@@ -115,6 +116,9 @@ export default class Product extends Component {
     }
 
     if (this.options.imageSize) {
+      if (this.selectedImage) {
+        console.log('x');
+      }
       return this.model.selectedVariant.imageVariants.filter((imageVariant) => imageVariant.name === this.options.imageSize)[0];
     }
 
@@ -125,6 +129,15 @@ export default class Product extends Component {
       })[0];
     }
 
+    if (this.selectedImage) {
+      // console.log(this.selectedImage);
+      const theImage = this.model.images.filter((image) => {
+        return image.id === this.selectedImage.id;
+      })[0];
+      console.log(theImage);
+      console.log(this.model.selectedVariant.imageVariants);
+      debugger;
+    }
     return this.model.selectedVariant.imageVariants.filter((imageVariant) => imageVariant.name === 'grande')[0];
   }
 
@@ -253,6 +266,7 @@ export default class Product extends Component {
       [`click ${this.selectors.product.quantityIncrement}`]: this.onQuantityIncrement.bind(this, 1),
       [`click ${this.selectors.product.quantityDecrement}`]: this.onQuantityIncrement.bind(this, -1),
       [`blur ${this.selectors.product.quantityInput}`]: this.onQuantityBlur.bind(this),
+      [`click ${this.selectors.product.carouselItem}`]: this.onCarouselItemClick.bind(this),
     }, this.options.DOMEvents);
   }
 
@@ -578,6 +592,19 @@ export default class Product extends Component {
     if (this.cart && this.cart.isVisible) {
       this.cart.close();
     }
+  }
+
+  onCarouselItemClick(evt, target) {
+    const selectedImageId = target.dataset.imageId;
+    const imageList = this.model.images;
+    const foundImage = imageList.find((image) => {
+      return image.id === parseInt(selectedImageId, 10);
+    });
+
+    if (foundImage) {
+      this.selectedImage = foundImage;
+    }
+    this.view.render();
   }
 
   /**

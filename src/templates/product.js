@@ -13,6 +13,16 @@ const buttonTemplate = '<div class="{{data.classes.product.buttonWrapper}}"><but
 
 const productTemplate = {
   img: '<div class="{{data.classes.product.imgWrapper}}"><img class="{{data.classes.product.img}}" src="{{data.currentImage.src}}" /></div>',
+  imgWithCarousel: `<div class="{{data.classes.product.imgWrapper}}">
+                      <img class="{{data.classes.product.img}}" src="{{data.currentImage.src}}" />
+                      <div class="{{data.classes.product.carousel}}">
+                        {{#data.images}}
+                        <div class="{{data.classes.product.carouselItem}}" data-image-id="{{id}}">
+                          <img src="{{src}}" />
+                        </div>
+                        {{/data.images}}
+                      </div>
+                    </div>`,
   title: '<h1 class="{{data.classes.product.title}}">{{data.title}}</h1>',
   variantTitle: '{{#data.hasVariants}}<h2 class="{{data.classes.product.variantTitle}}">{{data.selectedVariant.title}}</h2>{{/data.hasVariants}}',
   options: '{{#data.hasVariants}}<div class="{{data.classes.product.options}}">{{{data.optionsHtml}}}</div>{{/data.hasVariants}}',

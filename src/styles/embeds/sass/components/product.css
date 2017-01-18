@@ -269,3 +269,19 @@
     stroke-dashoffset: 0;
   }
 }
+
+
+.shopify-buy__carousel {
+  font-size: 0;
+  text-align: center;
+  min-height: 90px;
+}
+
+.shopify-buy__carousel-item {
+  width: 15%;
+  min-width: 40px;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 5px;
+  cursor: pointer;
+}
