@@ -201,7 +201,7 @@ const defaults = {
       button: 'shopify-buy__btn shopify-buy__btn--cart-checkout',
       close: 'shopify-buy__btn--close',
       cartScroll: 'shopify-buy__cart-scroll',
-      emptyCart: 'shopify-buy__cart-empty-text',
+      empty: 'shopify-buy__cart-empty-text',
     },
     text: {
       title: 'Cart',
