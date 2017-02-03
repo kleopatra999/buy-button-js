@@ -17,9 +17,7 @@ const productTemplate = {
                       <img class="{{data.classes.product.img}}" src="{{data.currentImage.src}}" />
                       <div class="{{data.classes.product.carousel}}">
                         {{#data.images}}
-                        <div class="{{data.classes.product.carouselItem}}" data-image-id="{{id}}">
-                          <img src="{{src}}" />
-                        </div>
+                        <div class="{{data.classes.product.carouselItem}}" data-image-id="{{id}}" style="background-image: url({{src}})"></div>
                         {{/data.images}}
                       </div>
                     </div>`,

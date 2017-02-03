@@ -117,7 +117,10 @@ export default class Product extends Component {
 
     if (this.options.imageSize) {
       if (this.selectedImage) {
-        console.log('x');
+        const theImage = this.model.images.filter((image) => {
+          return image.id === this.selectedImage.id;
+        })[0];
+        return theImage;
       }
       return this.model.selectedVariant.imageVariants.filter((imageVariant) => imageVariant.name === this.options.imageSize)[0];
     }
@@ -130,13 +133,10 @@ export default class Product extends Component {
     }
 
     if (this.selectedImage) {
-      // console.log(this.selectedImage);
       const theImage = this.model.images.filter((image) => {
         return image.id === this.selectedImage.id;
       })[0];
-      console.log(theImage);
-      console.log(this.model.selectedVariant.imageVariants);
-      debugger;
+      return theImage;
     }
     return this.model.selectedVariant.imageVariants.filter((imageVariant) => imageVariant.name === 'grande')[0];
   }
@@ -577,6 +577,7 @@ export default class Product extends Component {
     const target = evt.target;
     const value = target.options[target.selectedIndex].value;
     const name = target.getAttribute('name');
+    this.selectedImage = null;
     this.updateVariant(name, value);
   }
 
