@@ -14,11 +14,17 @@ const buttonTemplate = '<div class="{{data.classes.product.buttonWrapper}}"><but
 const productTemplate = {
   img: '<div class="{{data.classes.product.imgWrapper}}"><img class="{{data.classes.product.img}}" src="{{data.currentImage.src}}" /></div>',
   imgWithCarousel: `<div class="{{data.classes.product.imgWrapper}}">
-                      <img class="{{data.classes.product.img}}" src="{{data.currentImage.src}}" />
+                      <div class="main-image-wrapper">
+                        <button type="button" class="carousel-button carousel-button--previous">L</button>
+                        <img class="{{data.classes.product.img}}" src="{{data.currentImage.src}}" />
+                        <button type="button" class="carousel-button carousel-button--next">R</button>
+                      </div>
                       <div class="{{data.classes.product.carousel}}">
-                        {{#data.images}}
-                        <div class="{{data.classes.product.carouselItem}}" data-image-id="{{id}}" style="background-image: url({{src}})"></div>
-                        {{/data.images}}
+                        {{#data.carouselImages}}
+                        <div class="{{data.classes.product.carouselItem}} {{#isSelected}} {{data.classes.product.carouselItemSelected}} {{/isSelected}}" data-image-id="{{id}}" style="background-image: url({{src}})">
+                        {{isSelected}}
+                        </div>
+                        {{/data.carouselImages}}
                       </div>
                     </div>`,
   title: '<h1 class="{{data.classes.product.title}}">{{data.title}}</h1>',

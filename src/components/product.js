@@ -115,6 +115,8 @@ export default class Product extends Component {
       return null;
     }
 
+    let src;
+
     if (this.options.imageSize) {
       if (this.selectedImage) {
         const theImage = this.model.images.filter((image) => {
@@ -122,14 +124,16 @@ export default class Product extends Component {
         })[0];
         return theImage;
       }
-      return this.model.selectedVariant.imageVariants.filter((imageVariant) => imageVariant.name === this.options.imageSize)[0];
+      src = this.model.selectedVariant.imageVariants.filter((imageVariant) => imageVariant.name === this.options.imageSize)[0].src;
+      return Object.assign({}, this.model.selectedVariant.image, {src});
     }
 
     if (this.options.width && this.options.layout === 'vertical') {
-      return this.model.selectedVariant.imageVariants.filter((image) => {
+      src = this.model.selectedVariant.imageVariants.filter((image) => {
         const containerWidth = parseInt(this.options.width, 10);
         return parseInt(image.dimension, 10) >= containerWidth * 1.5;
-      })[0];
+      })[0].src;
+      return Object.assign({}, this.model.selectedVariant.image, {src});
     }
 
     if (this.selectedImage) {
@@ -138,7 +142,8 @@ export default class Product extends Component {
       })[0];
       return theImage;
     }
-    return this.model.selectedVariant.imageVariants.filter((imageVariant) => imageVariant.name === 'grande')[0];
+    src = this.model.selectedVariant.imageVariants.filter((imageVariant) => imageVariant.name === 'grande')[0].src;
+    return Object.assign({}, this.model.selectedVariant.image, {src});
   }
 
   /**
@@ -185,6 +190,14 @@ export default class Product extends Component {
       priceClass: this.priceClass,
       formattedPrice: this.formattedPrice,
       formattedCompareAtPrice: this.formattedCompareAtPrice,
+      carouselIndex: 0,
+      carouselImages: this.carouselImages,
+    });
+  }
+
+  get carouselImages() {
+    return this.model.images.map((image) => {
+      return Object.assign({}, image, {isSelected: image.id === this.currentImage.id});
     });
   }
 
@@ -267,6 +280,8 @@ export default class Product extends Component {
       [`click ${this.selectors.product.quantityDecrement}`]: this.onQuantityIncrement.bind(this, -1),
       [`blur ${this.selectors.product.quantityInput}`]: this.onQuantityBlur.bind(this),
       [`click ${this.selectors.product.carouselItem}`]: this.onCarouselItemClick.bind(this),
+      [`click ${this.selectors.product.carouselNext}`]: this.onCarouselChange.bind(this, true),
+      [`click ${this.selectors.product.carouselPrevious}`]: this.onCarouselChange.bind(this, false),
     }, this.options.DOMEvents);
   }
 
@@ -605,6 +620,27 @@ export default class Product extends Component {
     if (foundImage) {
       this.selectedImage = foundImage;
     }
+    this.view.render();
+  }
+
+  onCarouselChange(toRight) {
+    const imageList = this.model.images;
+    const currentImage = imageList.find((image) => {
+      return image.id === this.currentImage.id;
+    });
+    const currentImageIndex = imageList.indexOf(currentImage);
+    if (toRight) {
+      if (currentImageIndex === imageList.length) {
+        this.selectedImage = imageList[0];
+      } else {
+        this.selectedImage = imageList[currentImageIndex + 1];
+      }
+    } else if (currentImageIndex === 0) {
+      this.selectedImage = imageList[imageList.length - 1];
+    } else {
+      this.selectedImage = imageList[currentImageIndex - 1];
+    }
+
     this.view.render();
   }
 

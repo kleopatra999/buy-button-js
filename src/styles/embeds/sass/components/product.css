@@ -281,7 +281,6 @@
 .shopify-buy__carousel-item {
   width: calc(16.666% - var(--gutter));
   margin-left: var(--gutter);
-  min-width: 40px;
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
@@ -298,4 +297,26 @@
     display: block;
     padding-top: 100%;
   }
+}
+
+.main-image-wrapper {
+  position: relative;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel-button--previous {
+  left: 10px;
+}
+
+.carousel-button--next {
+  right: 10px;
+}
+
+.shopify-buy__carousel-item--selected {
+  opacity: 0.6;
 }
