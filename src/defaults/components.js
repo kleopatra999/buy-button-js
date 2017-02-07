@@ -26,6 +26,7 @@ const defaults = {
     ],
     contents: {
       img: true,
+      imgWithCarousel: false,
       title: true,
       variantTitle: false,
       price: true,
@@ -83,7 +84,7 @@ const defaults = {
     layout: 'horizontal',
     contents: {
       img: true,
-      // imgWithCarousel: true,
+      imgWithCarousel: false,
       title: true,
       variantTitle: false,
       price: true,
@@ -96,7 +97,7 @@ const defaults = {
       description: true,
     },
     order: [
-      // 'img',
+      'img',
       'imgWithCarousel',
       'title',
       'variantTitle',
@@ -125,7 +126,7 @@ const defaults = {
       close: 'shopify-buy__btn--close',
       wrapper: 'shopify-buy__modal-wrapper',
       product: 'shopify-buy__product-modal',
-      // img: 'shopify-buy__modal-img',
+      img: 'shopify-buy__modal-img',
       imgWithCarousel: 'shopify-buy__modal-img',
       footer: 'shopify-buy__modal-footer',
       footerWithImg: 'shopify-buy__modal-footer--has-img',
