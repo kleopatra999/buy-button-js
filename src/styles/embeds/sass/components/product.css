@@ -305,16 +305,33 @@
 
 .carousel-button {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  width: 75px;
+  top: 0;
+  height: 100%;
+  border: none;
+  font-size: 0;
+  background-image: url("http://10.91.1.169:8080/dist/arrow.svg");
+  background-color: transparent;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: 45px center;
+  opacity: 0.4;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    opacity: 0.9;
+    outline: none;
+  }
 }
 
 .carousel-button--previous {
-  left: 10px;
+  left: 0;
+  transform: rotate(180deg);
 }
 
 .carousel-button--next {
-  right: 10px;
+  right: 0;
 }
 
 .shopify-buy__carousel-item--selected {

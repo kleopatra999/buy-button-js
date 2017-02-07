@@ -280,8 +280,8 @@ export default class Product extends Component {
       [`click ${this.selectors.product.quantityDecrement}`]: this.onQuantityIncrement.bind(this, -1),
       [`blur ${this.selectors.product.quantityInput}`]: this.onQuantityBlur.bind(this),
       [`click ${this.selectors.product.carouselItem}`]: this.onCarouselItemClick.bind(this),
-      [`click ${this.selectors.product.carouselNext}`]: this.onCarouselChange.bind(this, true),
-      [`click ${this.selectors.product.carouselPrevious}`]: this.onCarouselChange.bind(this, false),
+      [`click ${this.selectors.product.carouselNext}`]: this.onCarouselChange.bind(this, 1),
+      [`click ${this.selectors.product.carouselPrevious}`]: this.onCarouselChange.bind(this, -1),
     }, this.options.DOMEvents);
   }
 
@@ -611,11 +611,11 @@ export default class Product extends Component {
   }
 
   onCarouselItemClick(evt, target) {
-    const selectedImageId = target.dataset.imageId;
+    const selectedImageId = target.getAttribute('data-image-id');
     const imageList = this.model.images;
-    const foundImage = imageList.find((image) => {
+    const foundImage = imageList.filter((image) => {
       return image.id === parseInt(selectedImageId, 10);
-    });
+    })[0];
 
     if (foundImage) {
       this.selectedImage = foundImage;
@@ -623,24 +623,24 @@ export default class Product extends Component {
     this.view.render();
   }
 
-  onCarouselChange(toRight) {
+  nextIndex(currentIndex, offset) {
+    const nextIndex = currentIndex + offset;
+    if (nextIndex > this.model.images.length) {
+      return 0;
+    }
+    if (nextIndex < 0) {
+      return this.model.images.length - 1;
+    }
+    return nextIndex;
+  }
+
+  onCarouselChange(offset) {
     const imageList = this.model.images;
     const currentImage = imageList.find((image) => {
       return image.id === this.currentImage.id;
     });
     const currentImageIndex = imageList.indexOf(currentImage);
-    if (toRight) {
-      if (currentImageIndex === imageList.length) {
-        this.selectedImage = imageList[0];
-      } else {
-        this.selectedImage = imageList[currentImageIndex + 1];
-      }
-    } else if (currentImageIndex === 0) {
-      this.selectedImage = imageList[imageList.length - 1];
-    } else {
-      this.selectedImage = imageList[currentImageIndex - 1];
-    }
-
+    this.selectedImage = imageList[this.nextIndex(currentImageIndex, offset)];
     this.view.render();
   }
 

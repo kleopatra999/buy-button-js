@@ -15,9 +15,9 @@ const productTemplate = {
   img: '<div class="{{data.classes.product.imgWrapper}}"><img class="{{data.classes.product.img}}" src="{{data.currentImage.src}}" /></div>',
   imgWithCarousel: `<div class="{{data.classes.product.imgWrapper}}">
                       <div class="main-image-wrapper">
-                        <button type="button" class="carousel-button carousel-button--previous">L</button>
+                        <button type="button" class="carousel-button carousel-button--previous">Left</button>
                         <img class="{{data.classes.product.img}}" src="{{data.currentImage.src}}" />
-                        <button type="button" class="carousel-button carousel-button--next">R</button>
+                        <button type="button" class="carousel-button carousel-button--next">Right</button>
                       </div>
                       <div class="{{data.classes.product.carousel}}">
                         {{#data.carouselImages}}
