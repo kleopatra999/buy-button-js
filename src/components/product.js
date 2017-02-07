@@ -636,9 +636,9 @@ export default class Product extends Component {
 
   onCarouselChange(offset) {
     const imageList = this.model.images;
-    const currentImage = imageList.find((image) => {
+    const currentImage = imageList.filter((image) => {
       return image.id === this.currentImage.id;
-    });
+    })[0];
     const currentImageIndex = imageList.indexOf(currentImage);
     this.selectedImage = imageList[this.nextIndex(currentImageIndex, offset)];
     this.view.render();
